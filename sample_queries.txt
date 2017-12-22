@@ -1,0 +1,144 @@
+///////////////////////////////////////////////////////////////////////////
+                          Relational Algebra Engine
+                       Submitted By : Manish Kumar Singh
+                                Roll No. : 14075065
+                                   Welcome!!
+///////////////////////////////////////////////////////////////////////////
+1. CREATE_TABLE (table_name) (attributes-datatypes separated by commas)
+2. INSERT_INTO (table_name) (values to insert separated by commas)
+3. LOAD_TABLE filename
+4. SAVE tablename
+5. SHOW tablename
+6. PROJECT (attributes separated by commas):(tablename)
+7. SELECT (condition):(table_name)         (condition must consist of AND(&), OR(|), NOT(!) operators only, there should be nospaces unless they are present in the names of the attributes themselves and >, < or = may be used to compare attribute values. Inequalities between integer attributes only shall be evaluated.)
+8. RENAME table_name~new_name (att1, att2, ....)
+9. UNION table1+table2
+10. CARTESIAN_PRODUCT table1Xtable2
+11. SET_DIFFERENCE table1-table2
+12. NATURAL_JOIN table1;table2
+13. EXIT
+LOAD_TABLE Faculty
+                          Faculty
+            FacultyID,int             Name,varchar       Designation,string             Room No.,int       Department,varchar
+                       23             Mahesh Gupta              Asst. Prof.                       26                     Mech
+                       45           Sarvesh Sharma                    Prof.                        9                       EE
+                      117              Anmol Arora              Asso. Prof.                       11                      CSE
+                       74                  Shalini                    Prof.                       77                      CSE
+                       26                    Harsh              Asso. Prof.                       45                     Mech
+LOAD_TABLE Student1
+			  Student1
+  Name of student,varchar           Hostel No.,int       Department,varchar       Date of Birth,date
+                   Manish                       12                      CSE               1996-09-19
+                   Shivam                       17                      CSE               1993-12-05
+                   Steven                       21                     Mech               1989-10-07
+               Anant Dadu                        7                     Mech               1997-05-02
+               Suyah Jain                       15                     Mech               1988-23-11
+LOAD_TABLE Student2
+                          Student2
+  Name of student,varchar           Hostel No.,int       Department,varchar       Date of Birth,date
+                   Manish                       12                      CSE               1996-09-19
+            Saurabh Singh                       11   Biomedical Engineering               1993-09-26
+UNION Student1+Student2
+                          Student1_UNION_Student2
+  Name of student,varchar           Hostel No.,int       Department,varchar       Date of Birth,date
+                   Manish                       12                      CSE               1996-09-19
+                   Shivam                       17                      CSE               1993-12-05
+                   Steven                       21                     Mech               1989-10-07
+               Anant Dadu                        7                     Mech               1997-05-02
+               Suyah Jain                       15                     Mech               1988-23-11
+            Saurabh Singh                       11   Biomedical Engineering               1993-09-26
+SET_DIFFERENCE Student1-Student2
+                          Student1_SETDIFF_Student2
+  Name of student,varchar           Hostel No.,int       Department,varchar       Date of Birth,date
+                   Shivam                       17                      CSE               1993-12-05
+                   Steven                       21                     Mech               1989-10-07
+               Anant Dadu                        7                     Mech               1997-05-02
+               Suyah Jain                       15                     Mech               1988-23-11
+PROJECT FacultyID,Name,Room No.,Department:Faculty
+                          p_Faculty
+            FacultyID,int             Name,varchar             Room No.,int       Department,varchar
+                       23             Mahesh Gupta                       26                     Mech
+                       45           Sarvesh Sharma                        9                       EE
+                      117              Anmol Arora                       11                      CSE
+                       74                  Shalini                       77                      CSE
+                       26                    Harsh                       45                     Mech
+SELECT !(FacultyID>50|Designation=Prof.)&FacultyID<Room No.:Faculty
+                          s_Faculty
+            FacultyID,int             Name,varchar       Designation,string             Room No.,int       Department,varchar
+                       23             Mahesh Gupta              Asst. Prof.                       26                     Mech
+                       26                    Harsh              Asso. Prof.                       45                     Mech
+PROJECT FacultyID,Name:SELECT !(FacultyID>50|Designation=Prof.)&FacultyID<Room No.:Faculty
+                          p_s_Faculty
+            FacultyID,int             Name,varchar
+                       23             Mahesh Gupta
+                       26                    Harsh
+NATURAL_JOIN Faculty;Student1
+                          Faculty_JOIN_Student1
+            FacultyID,int             Name,varchar       Designation,string             Room No.,int       Department,varchar  Name of student,varchar           Hostel No.,int       Date of Birth,date
+                      117              Anmol Arora              Asso. Prof.                       11                      CSE                   Manish                       12               1996-09-19
+                       74                  Shalini                    Prof.                       77                      CSE                   Manish                       12               1996-09-19
+                      117              Anmol Arora              Asso. Prof.                       11                      CSE                   Shivam                       17               1993-12-05
+                       74                  Shalini                    Prof.                       77                      CSE                   Shivam                       17               1993-12-05
+                       23             Mahesh Gupta              Asst. Prof.                       26                     Mech                   Steven                       21               1989-10-07
+                       26                    Harsh              Asso. Prof.                       45                     Mech                   Steven                       21               1989-10-07
+                       23             Mahesh Gupta              Asst. Prof.                       26                     Mech               Anant Dadu                        7               1997-05-02
+                       26                    Harsh              Asso. Prof.                       45                     Mech               Anant Dadu                        7               1997-05-02
+                       23             Mahesh Gupta              Asst. Prof.                       26                     Mech               Suyah Jain                       15               1988-23-11
+                       26                    Harsh              Asso. Prof.                       45                     Mech               Suyah Jain                       15               1988-23-11
+PROJECT Faculty.Name,Faculty.Department,Student1.Department:CARTESIAN_PRODUCT FacultyXStudent1
+                          p_Faculty_PROD_Student1
+     Faculty.Name,varcharFaculty.Department,varcharStudent1.Department,varchar
+             Mahesh Gupta                     Mech                      CSE
+             Mahesh Gupta                     Mech                      CSE
+             Mahesh Gupta                     Mech                     Mech
+             Mahesh Gupta                     Mech                     Mech
+             Mahesh Gupta                     Mech                     Mech
+           Sarvesh Sharma                       EE                      CSE
+           Sarvesh Sharma                       EE                      CSE
+           Sarvesh Sharma                       EE                     Mech
+           Sarvesh Sharma                       EE                     Mech
+           Sarvesh Sharma                       EE                     Mech
+              Anmol Arora                      CSE                      CSE
+              Anmol Arora                      CSE                      CSE
+              Anmol Arora                      CSE                     Mech
+              Anmol Arora                      CSE                     Mech
+              Anmol Arora                      CSE                     Mech
+                  Shalini                      CSE                      CSE
+                  Shalini                      CSE                      CSE
+                  Shalini                      CSE                     Mech
+                  Shalini                      CSE                     Mech
+                  Shalini                      CSE                     Mech
+                    Harsh                     Mech                      CSE
+                    Harsh                     Mech                      CSE
+                    Harsh                     Mech                     Mech
+                    Harsh                     Mech                     Mech
+                    Harsh                     Mech                     Mech
+PROJECT Faculty.Name,Faculty.Department,Student1.Name of student,Student1.Department:CARTESIAN_PRODUCT FacultyXStudent1
+                          p_Faculty_PROD_Student1                      
+     Faculty.Name,varcharFaculty.Department,varcharStudent1.Name of student,varcharStudent1.Department,varchar
+             Mahesh Gupta                     Mech                   Manish                      CSE
+             Mahesh Gupta                     Mech                   Shivam                      CSE
+             Mahesh Gupta                     Mech                   Steven                     Mech
+             Mahesh Gupta                     Mech               Anant Dadu                     Mech
+             Mahesh Gupta                     Mech               Suyah Jain                     Mech
+           Sarvesh Sharma                       EE                   Manish                      CSE
+           Sarvesh Sharma                       EE                   Shivam                      CSE
+           Sarvesh Sharma                       EE                   Steven                     Mech
+           Sarvesh Sharma                       EE               Anant Dadu                     Mech
+           Sarvesh Sharma                       EE               Suyah Jain                     Mech
+              Anmol Arora                      CSE                   Manish                      CSE
+              Anmol Arora                      CSE                   Shivam                      CSE
+              Anmol Arora                      CSE                   Steven                     Mech
+              Anmol Arora                      CSE               Anant Dadu                     Mech
+              Anmol Arora                      CSE               Suyah Jain                     Mech
+                  Shalini                      CSE                   Manish                      CSE
+                  Shalini                      CSE                   Shivam                      CSE
+                  Shalini                      CSE                   Steven                     Mech
+                  Shalini                      CSE               Anant Dadu                     Mech
+                  Shalini                      CSE               Suyah Jain                     Mech
+                    Harsh                     Mech                   Manish                      CSE
+                    Harsh                     Mech                   Shivam                      CSE
+                    Harsh                     Mech                   Steven                     Mech
+                    Harsh                     Mech               Anant Dadu                     Mech
+                    Harsh                     Mech               Suyah Jain                     Mech
+

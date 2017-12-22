@@ -1,0 +1,6 @@
+FacultyID,int|Name,varchar|Designation,string|Room No.,int|Department,varchar
+23|Mahesh Gupta|Asst. Prof.|26|Mech
+45|Sarvesh Sharma|Prof.|9|EE
+117|Anmol Arora|Asso. Prof.|11|CSE
+74|Shalini|Prof.|77|CSE
+26|Harsh|Asso. Prof.|45|Mech

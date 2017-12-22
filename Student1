@@ -1,0 +1,6 @@
+Name of student,varchar|Hostel No.,int|Department,varchar|Date of Birth,date|
+Manish|12|CSE|1996-09-19|
+Shivam|17|CSE|1993-12-05|
+Steven|21|Mech|1989-10-07|
+Anant Dadu|7|Mech|1997-05-02
+Suyah Jain|15|Mech|1988-23-11
